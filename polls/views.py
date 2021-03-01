@@ -15,34 +15,6 @@ class HomepageView(TemplateView):
     template_name = 'index.html'
 
 
-class CreatePollView(FormView):
-    form_class = CreatePollForm
-    template_name = 'poll/create-poll.html'
-
-    def get_form_kwargs(self):
-        """
-        Overriding get_form_kwargs to pass the request to the form.
-        :return: kwargs updated with the request
-        """
-        kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
-
-    def form_valid(self, form):
-        """
-        Overriding form_valid to trigger form.save() and adding user_id/poll_id to the session
-        :return: super().form_valid()
-        """
-        poll = form.save()
-        self.request.session['user_id'] = str(poll.created_by.pk)
-        self.request.session['poll_id'] = str(poll.id)
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        poll_id = self.request.session['poll_id']
-        return reverse('poll_detail', kwargs={'poll_id': poll_id})
-
-
 def poll_detail(request, poll_id):
     """
     Detail view for the poll, created as a function view to be able to render the page depending on the user
@@ -72,6 +44,34 @@ def poll_detail(request, poll_id):
     else:
         context['voting_form'] = VotingForm()
         return render(request, 'poll/developer-view.html', context)
+
+
+class CreatePollView(FormView):
+    form_class = CreatePollForm
+    template_name = 'poll/create-poll.html'
+
+    def get_form_kwargs(self):
+        """
+        Overriding get_form_kwargs to pass the request to the form.
+        :return: kwargs updated with the request
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        """
+        Overriding form_valid to trigger form.save() and adding user_id/poll_id to the session
+        :return: super().form_valid()
+        """
+        poll = form.save()
+        self.request.session['user_id'] = str(poll.created_by.pk)
+        self.request.session['poll_id'] = str(poll.id)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        poll_id = self.request.session['poll_id']
+        return reverse('poll_detail', kwargs={'poll_id': poll_id})
 
 
 class JoinAPollView(FormView):
@@ -190,6 +190,12 @@ def submit_vote(request, poll_id):
 
 
 def end_topic_voting(request, poll_id):
+    """
+        View to close current topic in a Poll
+        :param request:
+        :param poll_id: UUID representing Poll ID
+        :return: dict with message str
+    """
     poll_topic = PollTopic.objects.filter(
         poll_id=poll_id,
         is_active=True
