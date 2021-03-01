@@ -1,0 +1,38 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+settings_dev.py
+
+
+### PyCharm ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+
+*.iml
+
+## Directory-based project format:
+.idea/
+
+# Gradle:
+# .idea/gradle.xml
+# .idea/libraries
+
+# Mongo Explorer plugin:
+# .idea/mongoSettings.xml
+
+## File-based project format:
+*.ipr
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+out/
+
+*.db
+*.sqlite3
+debug.log
+bower_components/
+node_modules
+staticfiles/

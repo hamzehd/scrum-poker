@@ -1,0 +1,15 @@
+{% load crispy_forms_tags %}
+<div class="card bg-light mt-1 mb-1">
+    <div class="card-header">
+        Create/End Topic Discussion
+    </div>
+    <div class="card-body">
+        <div id="create-topic-form" class="{% if current_topic %}d-none{% endif %}">
+            {% crispy poll_form %}
+        </div>
+        <div id="end-topic" class="{% if not current_topic %}d-none{% endif %}">
+            <button id="end-topic-btn" type="button" class="btn btn-danger btn-lg">End Topic Discussion, Create a new topic</button>
+        </div>
+    </div>
+</div>
+

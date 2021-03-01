@@ -1,0 +1,18 @@
+{% if team_members %}
+    <hr/>
+
+    <div class="card bg-info text-white mt-3 mb-5">
+        <div class="card-header">
+            Members
+        </div>
+        <div class="card-body">
+            {% for member in team_members %}
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        {{ forloop.counter }}.: {{member.name}}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

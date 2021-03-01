@@ -1,0 +1,21 @@
+{% if current_topic %}
+    <div class="card bg-light mt-1 mb-1">
+        <div class="card-header">
+            <h5>Voting Topic</h5>
+        </div>
+        <div class="card-body">
+            <div class="row" id="current-topic-data" data-topic-id="{{ current_topic.id }}">
+                <div class="col-md-12">
+                    <p>
+                        Title: {{ current_topic.title }}
+                    </p>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <p>
+                        Description: {{ current_topic.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

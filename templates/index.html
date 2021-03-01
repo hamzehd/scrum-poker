@@ -1,0 +1,43 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1 class="mt-5">A Poker Planning App</h1>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 offset-md-1 text-center">
+            <p class="mt-5">
+                Welcome to my humble poker planning app!
+                <br/>
+                <br/>
+                You can start your session and invite your team members as a Scrum Master,
+                or join an existing one using this <a href="{% url 'join_poll' %}">link</a>.
+                <br/>
+                <br/>
+                No need to for sign up!
+            </p>
+        </div>
+    </div>
+
+    {% if request.session.poll_id %}
+        <div class="row">
+            <div class="col-md-4 offset-md-4 text-center">
+                <a href="{% url 'poll_detail' request.session.poll_id %}" class="btn btn-block btn-primary mt-5">Rejoin your session!</a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-md-4 offset-md-1 text-center">
+        <a href="{% url 'create_poll' %}" class="btn btn-block btn-primary mt-5">Start a {% if request.session.poll_id %}new{% endif %} planning session</a>
+      </div>
+      <div class="col-md-4 offset-md-2 text-center">
+        <a href="{% url 'join_poll' %}" class="btn btn-block btn-primary mt-5">Join an existing session</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

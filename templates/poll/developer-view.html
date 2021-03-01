@@ -1,0 +1,47 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ poll.name }} | Planning Poker{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-4">
+            <div id="poll-data" class="col-md-12 text-center" data-poll-id="{{ poll.id }}">
+                <b>{{ poll.name }}</b> Status: <span class="badge badge-info">{{ poll.get_status_display }}</span>
+            </div>
+        </div>
+
+        <div id="poll-topic">
+            {% include 'poll/poll-topic.html' %}
+        </div>
+
+        <div id="vote-box" class="card bg-light mt-3{% if not current_topic %} d-none{% endif %}">
+            <div class="card-header">
+                Vote Form
+            </div>
+            <div class="card-body">
+                {% crispy voting_form %}
+            </div>
+        </div>
+
+        <div id="poll-results">
+            {% include 'poll/poll-results.html' %}
+        </div>
+
+        <div id="poll-members">
+            {% include 'poll/poll-members.html' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block base_js %}
+    <script type="text/javascript">
+        var fetchPollMembers = "{% url 'fetch_poll_members' poll_id=poll.id %}";
+        var csrfToken = "{{ csrf_token }}";
+        var fetchCurrentTopic = "{% url 'fetch_current_topic' poll_id=poll.id %}";
+        var submitVoteUrl = "{% url 'submit_vote' poll_id=poll.id %}";
+        var fetchVotingResults = "{% url 'fetch_voting_results' poll_id=poll.id %}";
+    </script>
+    <script src="{% static 'js/poll.js' %}" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
