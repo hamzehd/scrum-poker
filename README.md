@@ -32,3 +32,4 @@ Welcome!
 3. Django Channels Redis 3.2.0
 4. Django Crispy Forms 1.11.0 http://django-crispy-forms.readthedocs.io/en/latest/
 5. Bootstrap4 https://getbootstrap.com/
+6. Bare Bootstrap theme https://startbootstrap.com/template/bare
